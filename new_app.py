@@ -164,7 +164,7 @@ if uploaded_file is not None:
     z = top_niches_rps(df_from_file)
     st.write(z)
     
-    st.scatter_chart(z, x = "Revenue Per SKU", y = "Revenue", color = "Category")
+    st.scatter_chart(z.head(6), x = "Revenue Per SKU", y = "Revenue", color = "Category", size = "Score")
     niche = sorted(list(df_from_file.Category.unique()))   
     category_filter = niche[0]
     category_filter = st.selectbox('Select a category', niche)
