@@ -3,10 +3,48 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
+
 def data_preprocess(data):
     #data clearing
+    if data["Lost profit"].dtype == "object":
+        data["Lost profit"] = data["Lost profit"].str.replace(",",".")
+    data["Lost profit"] = data["Lost profit"].astype(float)
+    
+    #division by subcategoeies
+    data["Category"] = data["Category"].str.split("/").str[2]
+    data = data[data["Category"].notnull()] #delete empty ones
+    return data
+    
+def top_niches_rps(data):
+    df = data
+    
+    #calculate revenue and RPS for niches
+    data = df.groupby("Category", as_index = False).agg({"Revenue": "sum", "SKU": "count"}).sort_values(by = "Revenue", ascending = False)
+    data = data[data["Revenue"]>0]
+    data["Revenue Per SKU"] = data["Revenue"]/data["SKU"]
+    data = data[["Category", "Revenue", "Revenue Per SKU"]]
+    
+    #normalising for analysis
+    r_m = data["Revenue"].mean()
+    r_std = data["Revenue"].std()
+    
+    rps_m = data["Revenue Per SKU"].mean()
+    rps_std = data["Revenue Per SKU"].std()
+    
+    
+    data["Revenue"] = (data["Revenue"]-r_m)/r_std
+    data["Revenue Per SKU"] = (data["Revenue Per SKU"]-rps_m)/rps_std
 
-    data["Lost profit"] = data["Lost profit"].str.replace(",",".")
+    data["Score"] = data["Revenue"]+data["Revenue Per SKU"]
+    data = data.sort_values(by = "Score", ascending = False).head(10)
+    
+    return data
+
+def data_category_preprocess(data):
+    #data clearing
+    if data["Lost profit"].dtype == "object":
+        data["Lost profit"] = data["Lost profit"].str.replace(",",".")
+    
     data["Lost profit"] = data["Lost profit"].astype(float)
 
     #create new columns
@@ -117,33 +155,47 @@ def analisys(data, Range_name):
 
 
 st.title("Аналитический отчет")
-# Create a file uploader
-
-
-
-Range_name = "Эконом"
-Range_name = st.selectbox(
-    "Выберите ценовой сегмент",
-    ("Эконом", "Эконом+", "Средний-", "Средний", "Средний+", "Бизнес-", "Бизнес","Бизнес+","Люкс"))  
+# Create a file uploader  
 uploaded_file = st.file_uploader("Select a CSV file", type=["csv"])
 if uploaded_file is not None:
+    df_from_file = pd.read_csv(uploaded_file, sep = ";")
+    df_from_file = data_preprocess(df_from_file)
+    
+    z = top_niches_rps(df_from_file)
+    st.write(z)
+    
+    st.scatter_chart(z, x = "Revenue Per SKU", y = "Revenue")
+    niche = sorted(list(df_from_file.Category.unique()))   
+    category_filter = niche[0]
+    category_filter = st.selectbox('Select a category', niche)
+    
+    df_from_file = df_from_file[df_from_file["Category"] == category_filter]
+    
+    
+    #Niche Analysis
+    Range_name = "Эконом"
+    Range_name = st.selectbox(
+    "Выберите ценовой сегмент",
+    ("Эконом", "Эконом+", "Средний-", "Средний", "Средний+", "Бизнес-", "Бизнес","Бизнес+","Люкс"))
   #file_contents = uploaded_file.read()
   #Range_name = st.selectbox(
   #"Выберите ценовой сегмент",
   #("Эконом", "Эконом+", "Средний-", "Средний", "Средний+", "Бизнес-", "Бизнес","Бизнес+","Люкс"))  
-  df_from_file = pd.read_csv(uploaded_file, sep = ";")  
+    
   # Process the uploaded file
-  csv_file1, csv_file2, csv_file3 = analisys(df_from_file, Range_name)
-
+    csv_file1, csv_file2, csv_file3 = analisys(df_from_file, Range_name)
+    
   # Display the output CSV files
-  st.write("Ниже можно скачать крутые таблички :wolf: ")
-  st.write("Анализ ценовых сегментов:")
-  st.write(csv_file1)  
-  st.write("Список топовых товаров в лучшем ценовом сегменте:")
-  st.write(csv_file2)
-  st.write("Примерный расчет закупки партии на WB на рассматриваемый период")
-  st.write(csv_file3)
+    st.write("Ниже можно скачать крутые таблички :wolf: ")
+    st.write("Анализ ценовых сегментов:")
+    st.write(csv_file1)  
+    st.write("Список топовых товаров в лучшем ценовом сегменте:")
+    st.write(csv_file2)
+    st.write("Примерный расчет закупки партии на WB на рассматриваемый период")
+    st.write(csv_file3)
 if uploaded_file is None:
     st.write("Загрузи файл, проверь, чтобы в нем были следующие столбцы :wolf:")
     st.write("Name, SKU, Category, Brand, Seller, Median price, Sales, Revenue, Lost profit, Days with sales, First Date, Final price")
     st.write("Без них скрипт работать не будет")
+    
+st.scatter_chart(z, x = "Revenue Per SKU", y = "Revenue")
