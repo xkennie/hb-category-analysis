@@ -19,26 +19,26 @@ def top_niches_rps(data):
     df = data
     
     #calculate revenue and RPS for niches
-    data = df.groupby("Category", as_index = False).agg({"Revenue": "sum", "SKU": "count"}).sort_values(by = "Revenue", ascending = False)
-    data = data[data["Revenue"]>0]
-    data["Revenue Per SKU"] = data["Revenue"]/data["SKU"]
-    data = data[["Category", "Revenue", "Revenue Per SKU"]]
+    proxy_data = df.groupby("Category", as_index = False).agg({"Revenue": "sum", "SKU": "count"}).sort_values(by = "Revenue", ascending = False)
+    proxy_data = proxy_data[proxy_data["Revenue"]>0]
+    proxy_data["Revenue Per SKU"] = proxy_data["Revenue"]/proxy_data["SKU"]
+    proxy_data = proxy_data[["Category", "Revenue", "Revenue Per SKU"]]
     
     #normalising for analysis
-    r_m = data["Revenue"].mean()
-    r_std = data["Revenue"].std()
+    r_m = proxy_data["Revenue"].mean()
+    r_std = proxy_data["Revenue"].std()
     
-    rps_m = data["Revenue Per SKU"].mean()
-    rps_std = data["Revenue Per SKU"].std()
+    rps_m = proxy_data["Revenue Per SKU"].mean()
+    rps_std = proxy_data["Revenue Per SKU"].std()
     
     
-    data["Revenue"] = (data["Revenue"]-r_m)/r_std
-    data["Revenue Per SKU"] = (data["Revenue Per SKU"]-rps_m)/rps_std
+    proxy_data["Revenue"] = (proxy_data["Revenue"]-r_m)/r_std
+    proxy_data["Revenue Per SKU"] = (proxy_data["Revenue Per SKU"]-rps_m)/rps_std
 
-    data["Score"] = data["Revenue"]+data["Revenue Per SKU"]
-    data = data.sort_values(by = "Score", ascending = False).head(10)
+    proxy_data["Score"] = proxy_data["Revenue"]+proxy_data["Revenue Per SKU"]
+    proxy_data = proxy_data.sort_values(by = "Score", ascending = False).head(10)
     
-    return data
+    return proxy_data
 
 def data_category_preprocess(data):
     #data clearing
@@ -198,4 +198,3 @@ if uploaded_file is None:
     st.write("Name, SKU, Category, Brand, Seller, Median price, Sales, Revenue, Lost profit, Days with sales, First Date, Final price")
     st.write("Без них скрипт работать не будет")
     
-st.scatter_chart(z, x = "Revenue Per SKU", y = "Revenue")
