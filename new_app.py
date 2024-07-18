@@ -118,6 +118,19 @@ def analisys(data, Range_name):
 
 st.title("Аналитический отчет")
 # Create a file uploader
+
+
+# Create a sample dataframe
+chart_data = pd.DataFrame(np.random.randn(20, 4), columns=["col1", "col2", "col3", "col4"])
+
+# Create a scatter chart using st.scatter_chart
+st.scatter_chart(
+    chart_data, 
+    x='col1', 
+    y=['col2', 'col3'], 
+    size='col4', 
+    color=['#FF0000', '#0000FF']  # Optional
+)
 Range_name = "Эконом"
 Range_name = st.selectbox(
     "Выберите ценовой сегмент",
