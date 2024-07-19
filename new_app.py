@@ -175,6 +175,7 @@ if uploaded_file is not None:
     df_from_file = data_preprocess(df_from_file)
     
     z = top_niches_rps(df_from_file)
+    st.write("Топовые ниши внутри категории по соотношению выручки и выручки на товар")
     st.write(z)
     
     st.scatter_chart(z.head(6), x = "Revenue Per SKU", y = "Revenue", color = "Category", size = "Score")
@@ -189,6 +190,7 @@ if uploaded_file is not None:
     fig, ax = plt.subplots()
     ax.pie(sellerspltdf['Revenue'], labels=sellerspltdf['Seller'], autopct='%1.1f%%')
     ax.axis('equal')  # equal aspect ratio ensures that pie is drawn as a circle
+    ax.set_title('Распределение выручки по селлерам')
     # display the chart in Streamlit
     st.pyplot(fig)
     
