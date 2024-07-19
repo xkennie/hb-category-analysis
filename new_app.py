@@ -88,21 +88,21 @@ def price_segmentation(data):
   for Range in ranges:
       df = data[data["Price range"] == Range]
       diapazon.append(str(df["Final price"].min())+'-'+str(df["Final price"].max()))
-      mean_price.append(np.median(df["Final price"]))
-      overall_share.append(df["Revenue"].sum()/data["Revenue"].sum()*100)
+      mean_price.append(round(np.median(df["Final price"])))
+      overall_share.append(round(df["Revenue"].sum()/data["Revenue"].sum()*100))
       sku.append(df.shape[0])
-      revenue_per_sku.append(df["Revenue"].sum()/df.shape[0])
+      revenue_per_sku.append(round(df["Revenue"].sum()/df.shape[0]))
       sku_with_sales.append(df[df["Sales"]>1].shape[0])
-      percent_sku_with_sales.append(df[df["Sales"]>1].shape[0]/df.shape[0]*100)
+      percent_sku_with_sales.append(round(df[df["Sales"]>1].shape[0]/df.shape[0]*100))
       sku_over1m.append(df[df["Revenue"]>1000000].shape[0])
       sales.append(df["Sales"].sum())
       sales_over1m.append(df[df["Revenue"]>1000000]["Sales"].sum())
-      share_sales_over1m.append(df[df["Revenue"]>1000000]["Sales"].sum()/df["Sales"].sum())
+      share_sales_over1m.append(round(df[df["Revenue"]>1000000]["Sales"].sum()*100/df["Sales"].sum()))
       revenue.append(df["Revenue"].sum())
       revenue_over1m.append(df[df["Revenue"]>1000000]["Revenue"].sum())
-      share_revenue_over1m.append(df[df["Revenue"]>1000000]["Revenue"].sum()/df["Revenue"].sum())
-      lost_profit.append(df["Lost profit"].sum())
-      share_lost_profit.append(df["Lost profit"].sum()/df["Revenue"].sum()*100)
+      share_revenue_over1m.append(round(df[df["Revenue"]>1000000]["Revenue"].sum()*100/df["Revenue"].sum()))
+      lost_profit.append(round(df["Lost profit"].sum()))
+      share_lost_profit.append(round(df["Lost profit"].sum()/df["Revenue"].sum()*100))
       group_a.append(df["Group A"].sum())
       share_group_a.append(df["Group A"].sum()/df.shape[0]*100)
 
@@ -144,8 +144,8 @@ def quantity_estimate(Range_name, data):
     qe_df["Количество к закупке"] = round(qe_df["Количество продаж конкурентов"]/qe_df["Количество SKU"], -2)
     return qe_df
     
-def analisys(data, Range_name):
-  t = price_segmentation(data_category_preprocess(data))
+def analisys(data, Range_name, Category_name):
+  t = price_segmentation(data_category_preprocess(data[data["Category"] == Category_name"]))
   csv_file1 = t
   g = goods_list(Range_name, data)
   csv_file2 = g
@@ -169,7 +169,7 @@ if uploaded_file is not None:
     category_filter = niche[0]
     category_filter = st.selectbox('Select a category', niche)
     
-    df_from_file = df_from_file[df_from_file["Category"] == category_filter]
+    #df_from_file = df_from_file[df_from_file["Category"] == category_filter]
     
     
     #Niche Analysis
@@ -183,7 +183,7 @@ if uploaded_file is not None:
   #("Эконом", "Эконом+", "Средний-", "Средний", "Средний+", "Бизнес-", "Бизнес","Бизнес+","Люкс"))  
     
   # Process the uploaded file
-    csv_file1, csv_file2, csv_file3 = analisys(df_from_file, Range_name)
+    csv_file1, csv_file2, csv_file3 = analisys(df_from_file, Range_name, category_filter)
     
   # Display the output CSV files
     st.write("Ниже можно скачать крутые таблички :wolf: ")
