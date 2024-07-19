@@ -40,7 +40,7 @@ def top_niches_rps(data):
     
     return proxy_data
 
-def data_category_preprocess(data):
+def data_category_preprocess(data, Category_name):
     #data clearing
     if data["Lost profit"].dtype == "object":
         data["Lost profit"] = data["Lost profit"].str.replace(",",".")
@@ -48,6 +48,7 @@ def data_category_preprocess(data):
     data["Lost profit"] = data["Lost profit"].astype(float)
 
     #create new columns
+    data = data[data["Category"] == Category_name]
 
     #вспомогательные столбцы
     data["Price rank"] = data["Final price"].rank(ascending = 1)/data.shape[0]
@@ -145,7 +146,7 @@ def quantity_estimate(Range_name, data):
     return qe_df
     
 def analisys(data, Range_name, Category_name):
-  t = price_segmentation(data_category_preprocess(data[data["Category"] == Category_name]))
+  t = price_segmentation(data_category_preprocess(data))
   csv_file1 = t
   g = goods_list(Range_name, data)
   csv_file2 = g
