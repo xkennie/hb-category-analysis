@@ -148,9 +148,9 @@ def quantity_estimate(Range_name, data):
 def analisys(data, Range_name, Category_name):
   t = price_segmentation(data_category_preprocess(data, Category_name))
   csv_file1 = t
-  g = goods_list(Range_name, data)
+  g = goods_list(Range_name, data_category_preprocess(data, Category_name))
   csv_file2 = g
-  qe = quantity_estimate(Range_name, data)
+  qe = quantity_estimate(Range_name, data_category_preprocess(data, Category_name))
   csv_file3 = qe  
   return csv_file1, csv_file2, csv_file3
 
