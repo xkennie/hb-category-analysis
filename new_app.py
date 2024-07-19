@@ -185,11 +185,12 @@ if uploaded_file is not None:
     #df_from_file = df_from_file[df_from_file["Category"] == category_filter]
     #plot of sellers
     sellerspltdf = top_sellers(data_category_preprocess(data, Category_name))
-    fig, ax = plt.subplots()
-    ax.pie(sellerspltdf['Revenue'], labels=sellerspltdf['Seller'], autopct='%1.1f%%')
-    ax.axis('equal')  # equal aspect ratio ensures that pie is drawn as a circle
+    st.write(sellerspltdf)
+    #fig, ax = plt.subplots()
+    #ax.pie(sellerspltdf['Revenue'], labels=sellerspltdf['Seller'], autopct='%1.1f%%')
+    #ax.axis('equal')  # equal aspect ratio ensures that pie is drawn as a circle
     # display the chart in Streamlit
-    st.pyplot(fig)
+    #st.pyplot(fig)
     
     #Niche Analysis
     Range_name = "Эконом"
