@@ -184,7 +184,7 @@ if uploaded_file is not None:
     
     #df_from_file = df_from_file[df_from_file["Category"] == category_filter]
     #plot of sellers
-    sellerspltdf = top_sellers(data_category_preprocess(df_from_file, Category_name))
+    sellerspltdf = top_sellers(data_category_preprocess(df_from_file, category_filter))
     st.write(sellerspltdf)
     fig, ax = plt.subplots()
     ax.pie(sellerspltdf['Revenue'], labels=sellerspltdf['Seller'], autopct='%1.1f%%')
