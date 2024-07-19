@@ -154,7 +154,19 @@ def analisys(data, Range_name, Category_name):
   csv_file3 = qe  
   return csv_file1, csv_file2, csv_file3
 
+def top_sellers(data):
+    seller_revenue = data.groupby('Seller')['Revenue'].sum().reset_index()
 
+    # sort by Revenue in descending order and get top 5
+    top_5_sellers = seller_revenue.sort_values('Revenue', ascending=False).head(5)
+
+    # create a new category "Others" for all other sellers
+    others_revenue = seller_revenue[~seller_revenue['Seller'].isin(top_5_sellers['Seller'])]['Revenue'].sum()
+    others_df = pd.DataFrame({'Seller': ['Others'], 'Revenue': [others_revenue]})
+
+    # combine top 5 sellers with "Others" category
+    plot_df = pd.concat([top_5_sellers, others_df])
+    return plot_df
 st.title("Аналитический отчет")
 # Create a file uploader  
 uploaded_file = st.file_uploader("Select a CSV file", type=["csv"])
@@ -171,7 +183,13 @@ if uploaded_file is not None:
     category_filter = st.selectbox('Select a category', niche)
     
     #df_from_file = df_from_file[df_from_file["Category"] == category_filter]
-    
+    #plot of sellers
+    sellerspltdf = top_sellers(data_category_preprocess(data, Category_name))
+    fig, ax = plt.subplots()
+    ax.pie(sellerspltdf['Revenue'], labels=sellerspltdf['Seller'], autopct='%1.1f%%')
+    ax.axis('equal')  # equal aspect ratio ensures that pie is drawn as a circle
+    # display the chart in Streamlit
+    st.pyplot(fig)
     
     #Niche Analysis
     Range_name = "Эконом"
