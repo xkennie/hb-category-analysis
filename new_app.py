@@ -196,10 +196,10 @@ if uploaded_file is not None:
 
     if ("ООО ВБ Ритейл" in data_category_preprocess(df_from_file, category_filter)["Seller"].unique())|("ООО Вайлдберрис" in data_category_preprocess(df_from_file, category_filter)["Seller"].unique()):
         st.write("В этой нише торгует ВБ ❗️")
-        st.markdown("<h3><strong>В этой нише торгует ВБ ❗</strong></h3>")
+        st.markdown("**В этой нише торгует ВБ ❗**")
     else:
         st.write("ВБ в этой нише не торгует✅")
-        st.markdown("<h3><strong>ВБ в этой нише не торгует✅</strong></h3>")
+        st.markdown("**ВБ в этой нише не торгует✅**")
     
     
     #Niche Analysis
