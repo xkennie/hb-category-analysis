@@ -207,7 +207,7 @@ if uploaded_file is not None:
         hhi = data_category_preprocess(df_from_file, category_filter).groupby("Seller", as_index = False).agg({"Revenue": "sum"})
         hhi = hhi[hhi["Revenue"]>0]
         hhi["Share2"] = hhi["Revenue"].apply(lambda x: (x/hhi["Revenue"].sum())**(2))
-        st.subheader("Индекс Херфиндаля-Хиршмана: "+str((hhi["Share2"].sum())**(-1)))
+        st.subheader("Индекс Херфиндаля-Хиршмана: "+str(round((hhi["Share2"].sum())**(-1),2)))
         st.write("Таргет: 30-70")
 
     
