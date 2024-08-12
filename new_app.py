@@ -202,7 +202,7 @@ if uploaded_file is not None:
         if ("ООО ВБ Ритейл" in data_category_preprocess(df_from_file, category_filter)["Seller"].unique())|("ООО Вайлдберрис" in data_category_preprocess(df_from_file, category_filter)["Seller"].unique()):
             st.subheader("В этой нише торгует ВБ ❗️")
         else:
-            st.subheader("ВБ в этой нише не торгует✅")
+            st.subheader("ВБ в этой нише не торгует ✅")
     
         hhi = data_category_preprocess(df_from_file, category_filter).groupby("Seller", as_index = False).agg({"Revenue": "sum"})
         hhi = hhi[hhi["Revenue"]>0]
@@ -210,6 +210,15 @@ if uploaded_file is not None:
         st.subheader("Индекс Херфиндаля-Хиршмана: "+str(round((hhi["Share2"].sum())**(-1),2)))
         st.write("Таргет: 30-70")
 
+    st.write("Ожидаемая выручка от позиции в рейтинге по SKU")
+
+    dt = data_category_preprocess(df_from_file, category_filter)
+    xlist = [10, 20, 30, 40, 50, 60, 70, 80, 90, 95, 99]
+    ylist = dt['Revenue'].quantile([10, 20, 30, 40, 50, 60, 70, 80, 90, 95, 99])
+
+    plt.stem(xlist, ylist)
+    plt.show()
+    #st.write("Ожидаемая выручка от позиции в рейтинге по SKU")
     
     #Niche Analysis
     Range_name = "Эконом"
