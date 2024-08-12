@@ -185,22 +185,22 @@ if uploaded_file is not None:
     
     #df_from_file = df_from_file[df_from_file["Category"] == category_filter]
     #plot of sellers
-    sellerspltdf = top_sellers(data_category_preprocess(df_from_file, category_filter))
-    st.write(sellerspltdf)
-    fig, ax = plt.subplots()
-    ax.pie(sellerspltdf['Revenue'], labels=sellerspltdf['Seller'], autopct='%1.1f%%')
-    ax.axis('equal')  # equal aspect ratio ensures that pie is drawn as a circle
-    ax.set_title('Распределение выручки по селлерам')
-    # display the chart in Streamlit
-    st.pyplot(fig)
 
-    if ("ООО ВБ Ритейл" in data_category_preprocess(df_from_file, category_filter)["Seller"].unique())|("ООО Вайлдберрис" in data_category_preprocess(df_from_file, category_filter)["Seller"].unique()):
-        st.write("В этой нише торгует ВБ ❗️")
-        st.markdown("**В этой нише торгует ВБ ❗**")
-    else:
-        st.write("ВБ в этой нише не торгует✅")
-        st.markdown("**ВБ в этой нише не торгует✅**")
-        st.subheader("ВБ в этой нише не торгует✅")
+    col1, col2 = st.columns((75, 25))
+    with col1:
+        sellerspltdf = top_sellers(data_category_preprocess(df_from_file, category_filter))
+        st.write(sellerspltdf)
+        fig, ax = plt.subplots()
+        ax.pie(sellerspltdf['Revenue'], labels=sellerspltdf['Seller'], autopct='%1.1f%%')
+        ax.axis('equal')  # equal aspect ratio ensures that pie is drawn as a circle
+        ax.set_title('Распределение выручки по селлерам')
+    # display the chart in Streamlit
+        st.pyplot(fig)
+    with col2:
+        if ("ООО ВБ Ритейл" in data_category_preprocess(df_from_file, category_filter)["Seller"].unique())|("ООО Вайлдберрис" in data_category_preprocess(df_from_file, category_filter)["Seller"].unique()):
+            st.subheader("В этой нише торгует ВБ ❗️")
+        else:
+            st.subheader("ВБ в этой нише не торгует✅")
     
     
     #Niche Analysis
