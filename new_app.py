@@ -200,6 +200,7 @@ if uploaded_file is not None:
     else:
         st.write("ВБ в этой нише не торгует✅")
         st.markdown("**ВБ в этой нише не торгует✅**")
+        st.subheader("ВБ в этой нише не торгует✅")
     
     
     #Niche Analysis
