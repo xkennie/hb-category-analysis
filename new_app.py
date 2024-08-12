@@ -214,7 +214,7 @@ if uploaded_file is not None:
 
     dt = data_category_preprocess(df_from_file, category_filter)
     xlist = [10, 20, 30, 40, 50, 60, 70, 80, 90, 95, 99]
-    ylist = dt['Revenue'].quantile([10, 20, 30, 40, 50, 60, 70, 80, 90, 95, 99])
+    ylist = dt['Revenue'].quantile([0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90, 0.95, 0.99])
 
     plt.stem(xlist, ylist)
     plt.show()
