@@ -193,6 +193,13 @@ if uploaded_file is not None:
     ax.set_title('Распределение выручки по селлерам')
     # display the chart in Streamlit
     st.pyplot(fig)
+
+    if ("ООО ВБ Ритейл" in data_category_preprocess(df_from_file, category_filter)["Seller"].unique())|("ООО Вайлдберрис" in data_category_preprocess(df_from_file, category_filter)["Seller"].unique()):
+        st.write("В этой нише торгует ВБ ❗️")
+    else:
+        st.write("ВБ в этой нише не торгует✅")
+    
+    
     
     #Niche Analysis
     Range_name = "Эконом"
