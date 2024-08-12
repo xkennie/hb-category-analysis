@@ -204,6 +204,12 @@ if uploaded_file is not None:
         else:
             st.subheader("ВБ в этой нише не торгует✅")
     
+        hhi = data_category_preprocess(df_from_file, category_filter).groupby("Seller", as_index = False).agg({"Revenue": "sum"})
+        hhi = hhi[hhi["Revenue"]>0]
+        hhi["Share2"] = hhi["Revenue"].apply(lambda x: (x/hhi["Revenue"].sum())**(2))
+        st.subheader("Индекс Херфиндаля-Хиршмана: "+str((hhi["Share2"].sum())**(-1)))
+        st.write("Таргет: 30-70")
+
     
     #Niche Analysis
     Range_name = "Эконом"
