@@ -187,9 +187,10 @@ if uploaded_file is not None:
     #plot of sellers
 
     col1, col2 = st.columns((75, 25))
+    
+    sellerspltdf = top_sellers(data_category_preprocess(df_from_file, category_filter))
+    st.write(sellerspltdf)
     with col1:
-        sellerspltdf = top_sellers(data_category_preprocess(df_from_file, category_filter))
-        st.write(sellerspltdf)
         fig, ax = plt.subplots()
         ax.pie(sellerspltdf['Revenue'], labels=sellerspltdf['Seller'], autopct='%1.1f%%')
         ax.axis('equal')  # equal aspect ratio ensures that pie is drawn as a circle
