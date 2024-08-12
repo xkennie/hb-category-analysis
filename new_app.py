@@ -223,8 +223,20 @@ if uploaded_file is not None:
     ax.set_title('Распределение выручки по перцентилю')
     st.pyplot(fig)
     
-    #st.write("Ожидаемая выручка от позиции в рейтинге по SKU")
-    
+    st.write("Ожидаемая выручка от позиции в рейтинге селлерам")
+    dt = data_category_preprocess(df_from_file, category_filter).groupby("Seller",as_index = False).agg({"Revenue": "sum"}).sort_values(by = "Revenue", ascending = False)
+    xlist = [50, 60, 70, 80, 90, 95, 99]
+    ylist = dt['Revenue'].quantile([0.50, 0.60, 0.70, 0.80, 0.90, 0.95, 0.99])
+
+
+    fig, ax = plt.subplots()
+    ax.stem(xlist, ylist)
+    ax.grid()
+    ax.set_title('Распределение выручки по перцентилю')
+    st.pyplot(fig)
+
+
+
     #Niche Analysis
     Range_name = "Эконом"
     Range_name = st.selectbox(
