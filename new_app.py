@@ -186,7 +186,7 @@ if uploaded_file is not None:
     #df_from_file = df_from_file[df_from_file["Category"] == category_filter]
     #plot of sellers
 
-    
+    st.subheader("Монополизация")
     sellerspltdf = top_sellers(data_category_preprocess(df_from_file, category_filter))
     st.write(sellerspltdf)
     
@@ -210,6 +210,7 @@ if uploaded_file is not None:
         st.subheader("Индекс Херфиндаля-Хиршмана: "+str(round((hhi["Share2"].sum())**(-1),2)))
         st.write("Таргет: 30-70")
 
+    st.subheader("Ожидаемая выручка")
     st.write("Ожидаемая выручка от позиции в рейтинге по SKU")
 
     dt = data_category_preprocess(df_from_file, category_filter)
@@ -240,6 +241,8 @@ if uploaded_file is not None:
 
     st.bar_chart(dt, x = "x", y = "y",  x_label = "Перцентиль по селлерам", y_label = "Выручка") 
 
+    st.subheader("Выбор ценового сегмента")
+    
     t = price_segmentation(data_category_preprocess(df_from_file, category_filter))
     st.bar_chart(t, x = "Диапазон", y = "Коэффициент", color = "Ценовой сегмент") 
     #Niche Analysis
