@@ -217,14 +217,14 @@ if uploaded_file is not None:
     ylist = dt['Revenue'].quantile([0.50, 0.60, 0.70, 0.80, 0.90, 0.95, 0.99])
     dt = pd.DataFrame({"x": xlist, "y": ylist})
 
-    fig, ax = plt.subplots()
-    ax.stem(xlist, ylist)
-    ax.grid()
-    ax.set_title('Распределение выручки по перцентилю')
-    st.pyplot(fig)
+    #fig, ax = plt.subplots()
+    #ax.stem(xlist, ylist)
+    #ax.grid()
+    #ax.set_title('Распределение выручки по перцентилю')
+    #st.pyplot(fig)
 
 
-    st.bar_chart(dt, x = "x", y = "y") 
+    st.bar_chart(dt, x = "x", y = "y", x_label = "Перцентиль по SKU", y_label = "Выручка") 
     
     st.write("Ожидаемая выручка от позиции в рейтинге селлерам")
     dt = data_category_preprocess(df_from_file, category_filter).groupby("Seller",as_index = False).agg({"Revenue": "sum"}).sort_values(by = "Revenue", ascending = False)
@@ -232,11 +232,11 @@ if uploaded_file is not None:
     ylist = dt['Revenue'].quantile([0.50, 0.60, 0.70, 0.80, 0.90, 0.95, 0.99])
     
     dt = pd.DataFrame({"x": xlist, "y" : ylist})
-    fig, ax = plt.subplots()
-    ax.stem(xlist, ylist)
-    ax.grid()
-    ax.set_title('Распределение выручки по перцентилю')
-    st.pyplot(fig)
+    #fig, ax = plt.subplots()
+    #ax.stem(xlist, ylist, x_label = "Перцентиль по селлерам", y_label = "Выручка")
+    #ax.grid()
+    #ax.set_title('Распределение выручки по перцентилю')
+    #st.pyplot(fig)
 
     st.bar_chart(dt, x = "x", y = "y") 
 
