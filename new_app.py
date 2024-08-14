@@ -240,6 +240,8 @@ if uploaded_file is not None:
 
     st.bar_chart(dt, x = "x", y = "y",  x_label = "Перцентиль по селлерам", y_label = "Выручка") 
 
+    t = price_segmentation(data_category_preprocess(df_from_file, category_filter))
+    st.bar_chart(t, x = "Диапазон", y = "Коэффициент", color = "Ценовой сегмент") 
     #Niche Analysis
     Range_name = "Эконом"
     Range_name = st.selectbox(
@@ -256,8 +258,6 @@ if uploaded_file is not None:
   # Display the output CSV files
     st.write("Ниже можно скачать крутые таблички :wolf: ")
     st.write("Анализ ценовых сегментов:")
-    t = price_segmentation(data_category_preprocess(df_from_file, category_filter))
-    st.bar_chart(t, x = "Диапазон", y = "Коэффициент", color = "Ценовой сегмент") 
     st.write(csv_file1)  
     st.write("Список топовых товаров в лучшем ценовом сегменте:")
     st.write(csv_file2)
