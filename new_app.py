@@ -265,7 +265,9 @@ if uploaded_file is not None:
     '#5f9ea0',
     '#6495ed',
     '#4169e1',
-    '#b0e0e6'
+    '#b0e0e6',
+    '#add8e6',
+    '#add8e6'
 ]) 
     st.write(csv_file1)  
     st.write("Список топовых товаров в лучшем ценовом сегменте:")
