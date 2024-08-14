@@ -257,7 +257,7 @@ if uploaded_file is not None:
     st.write("Ниже можно скачать крутые таблички :wolf: ")
     st.write("Анализ ценовых сегментов:")
     t = price_segmentation(data_category_preprocess(df_from_file, category_filter))
-    st.bar_chart(t, x = "Ценовой сегмент", y = "Коэффициент") 
+    st.bar_chart(t, x = "Диапазон", y = "Коэффициент", color = "Ценовой сегмент") 
     st.write(csv_file1)  
     st.write("Список топовых товаров в лучшем ценовом сегменте:")
     st.write(csv_file2)
