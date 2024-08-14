@@ -247,7 +247,7 @@ if uploaded_file is not None:
     d = t.sort_values(by = "Средняя цена")
     st.bar_chart(d, x = "Диапазон", y = "Коэффициент", color = "Ценовой сегмент") 
 
-    st.subheader("Ниже можно скачать крутые таблички :wolf: ")
+    st.subheader("Ниже можно скачать крутые таблички для отчета :wolf: ")
     #Niche Analysis
     Range_name = "Эконом"
     Range_name = st.selectbox(
