@@ -244,7 +244,8 @@ if uploaded_file is not None:
     st.subheader("Выбор ценового сегмента")
     
     t = price_segmentation(data_category_preprocess(df_from_file, category_filter))
-    st.bar_chart(t, x = "Диапазон", y = "Коэффициент", color = "Ценовой сегмент") 
+    d = t.sort_values(by = "Средняя цена")
+    st.bar_chart(d, x = "Диапазон", y = "Коэффициент", color = "Ценовой сегмент") 
     #Niche Analysis
     Range_name = "Эконом"
     Range_name = st.selectbox(
