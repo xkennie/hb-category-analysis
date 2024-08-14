@@ -215,7 +215,7 @@ if uploaded_file is not None:
     dt = data_category_preprocess(df_from_file, category_filter)
     xlist = [50, 60, 70, 80, 90, 95, 99]
     ylist = dt['Revenue'].quantile([0.50, 0.60, 0.70, 0.80, 0.90, 0.95, 0.99])
-    dt = pd.DataFrame({"x": xlist, "y" = ylist})
+    dt = pd.DataFrame({"x": xlist, "y": ylist})
 
     fig, ax = plt.subplots()
     ax.stem(xlist, ylist)
@@ -231,7 +231,7 @@ if uploaded_file is not None:
     xlist = [50, 60, 70, 80, 90, 95, 99]
     ylist = dt['Revenue'].quantile([0.50, 0.60, 0.70, 0.80, 0.90, 0.95, 0.99])
     
-    dt = pd.DataFrame({"x": xlist, "y" = ylist})
+    dt = pd.DataFrame({"x": xlist, "y" : ylist})
     fig, ax = plt.subplots()
     ax.stem(xlist, ylist)
     ax.grid()
