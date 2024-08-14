@@ -256,6 +256,18 @@ if uploaded_file is not None:
   # Display the output CSV files
     st.write("Ниже можно скачать крутые таблички :wolf: ")
     st.write("Анализ ценовых сегментов:")
+    t = price_segmentation(data_category_preprocess(data, Category_name))
+    st.bar_chart(t, x = "Ценовой сегмент", y = "Коэффициент", color = [
+    '#1e90ff',
+    '#4682b4',
+    '#00bfff',
+    '#87ceeb',
+    '#5f9ea0',
+    '#6495ed',
+    '#4169e1',
+    '#b0e0e6',
+    '#add8e6'
+]) 
     st.write(csv_file1)  
     st.write("Список топовых товаров в лучшем ценовом сегменте:")
     st.write(csv_file2)
