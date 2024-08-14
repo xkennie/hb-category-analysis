@@ -238,7 +238,7 @@ if uploaded_file is not None:
     #ax.set_title('Распределение выручки по перцентилю')
     #st.pyplot(fig)
 
-    st.bar_chart(dt, x = "x", y = "y") 
+    st.bar_chart(dt, x = "x", y = "y",  x_label = "Перцентиль по селлерам", y_label = "Выручка") 
 
     #Niche Analysis
     Range_name = "Эконом"
