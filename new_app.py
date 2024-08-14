@@ -246,6 +246,8 @@ if uploaded_file is not None:
     t = price_segmentation(data_category_preprocess(df_from_file, category_filter))
     d = t.sort_values(by = "Средняя цена")
     st.bar_chart(d, x = "Диапазон", y = "Коэффициент", color = "Ценовой сегмент") 
+
+    st.subheader("Ниже можно скачать крутые таблички :wolf: ")
     #Niche Analysis
     Range_name = "Эконом"
     Range_name = st.selectbox(
@@ -260,7 +262,6 @@ if uploaded_file is not None:
     csv_file1, csv_file2, csv_file3 = analisys(df_from_file, Range_name, category_filter)
     
   # Display the output CSV files
-    st.write("Ниже можно скачать крутые таблички :wolf: ")
     st.write("Анализ ценовых сегментов:")
     st.write(csv_file1)  
     st.write("Список топовых товаров в лучшем ценовом сегменте:")
