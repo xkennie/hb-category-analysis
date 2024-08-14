@@ -224,7 +224,7 @@ if uploaded_file is not None:
     st.pyplot(fig)
 
 
-    st.bar_chart(dt, x = "xlist", y = "ylist") 
+    st.bar_chart(dt, x = "x", y = "y") 
     
     st.write("Ожидаемая выручка от позиции в рейтинге селлерам")
     dt = data_category_preprocess(df_from_file, category_filter).groupby("Seller",as_index = False).agg({"Revenue": "sum"}).sort_values(by = "Revenue", ascending = False)
@@ -238,7 +238,7 @@ if uploaded_file is not None:
     ax.set_title('Распределение выручки по перцентилю')
     st.pyplot(fig)
 
-    st.bar_chart(dt, x = "xlist", y = "ylist") 
+    st.bar_chart(dt, x = "x", y = "y") 
 
     #Niche Analysis
     Range_name = "Эконом"
