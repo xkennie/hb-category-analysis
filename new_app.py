@@ -56,7 +56,7 @@ def data_category_preprocess(data, Category_name):
 
     #добавляем столбцы
     data["Group A"] = data["Cumulative revenue"].apply(lambda x: 1 if x/data["Revenue"].sum()<0.8 else 0)
-    data["Price range"] = data["Price rank"].apply(lambda x: "Эконом" if x < 0.11 else ("Эконом+" if x<0.22 else("Средний-" if x < 0.33 else("Средний" if x < 0.44 else("Средний+" if x < 0.55 else("Бизнес-" if x < 0.66 else("Бизнес" if x < 0.77 else("Бизнес+" if x < 0.88 else "Люкс"))))))))
+    data["Price range"] = data["Price rank"].apply(lambda x: "1. Эконом" if x < 0.11 else ("2. Эконом+" if x<0.22 else("3. Средний-" if x < 0.33 else("4. Средний" if x < 0.44 else("5. Средний+" if x < 0.55 else("6. Бизнес-" if x < 0.66 else("7. Бизнес" if x < 0.77 else("8. Бизнес+" if x < 0.88 else "9. Люкс"))))))))
 
     return data
 
