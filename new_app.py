@@ -89,7 +89,7 @@ def price_segmentation(data):
   for Range in ranges:
       df = data[data["Price range"] == Range]
       diapazon.append(str(df["Median price"].min())+'-'+str(df["Median price"].max()))
-      mean_price.append(round(np.median(map(int, df["Median price"]))))
+      mean_price.append(round(np.median(df["Median price"].astype(float))))
       overall_share.append(round(df["Revenue"].sum()/data["Revenue"].sum()*100))
       sku.append(df.shape[0])
       revenue_per_sku.append(round(df["Revenue"].sum()/df.shape[0]))
