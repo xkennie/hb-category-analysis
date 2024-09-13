@@ -9,7 +9,9 @@ def data_preprocess(data):
     if data["Lost profit"].dtype == "object":
         data["Lost profit"] = data["Lost profit"].str.replace(",",".")
     data["Lost profit"] = data["Lost profit"].astype(float)
-    
+    if data["Median price"].dtype == "object":
+        data["Median price"] = data["Median price"].str.replace(",",".")
+    data["Median price"] = data["Median price"].astype(float)
     #division by subcategoeies
     data["Category"] = data["Category"].str.split("/").str[2]
     data = data[data["Category"].notnull()] #delete empty ones
