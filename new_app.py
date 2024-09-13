@@ -51,7 +51,7 @@ def data_category_preprocess(data, Category_name):
     data = data[data["Category"] == Category_name]
 
     #вспомогательные столбцы
-    data["Price rank"] = data["Final price"].rank(ascending = 1)/data.shape[0]
+    data["Price rank"] = data["Median price"].rank(ascending = 1)/data.shape[0]
     data["Cumulative revenue"] = np.cumsum(data["Revenue"])
 
     #добавляем столбцы
@@ -88,8 +88,8 @@ def price_segmentation(data):
   #append information to lists
   for Range in ranges:
       df = data[data["Price range"] == Range]
-      diapazon.append(str(df["Final price"].min())+'-'+str(df["Final price"].max()))
-      mean_price.append(round(np.median(df["Final price"])))
+      diapazon.append(str(df["Median price"].min())+'-'+str(df["Median price"].max()))
+      mean_price.append(round(np.median(df["Median price"])))
       overall_share.append(round(df["Revenue"].sum()/data["Revenue"].sum()*100))
       sku.append(df.shape[0])
       revenue_per_sku.append(round(df["Revenue"].sum()/df.shape[0]))
@@ -270,6 +270,6 @@ if uploaded_file is not None:
     st.write(csv_file3)
 if uploaded_file is None:
     st.write("Загрузи файл, проверь, чтобы в нем были следующие столбцы :wolf:")
-    st.write("Name, SKU, Category, Brand, Seller, Median price, Sales, Revenue, Lost profit, Days with sales, First Date, Final price")
+    st.write("Name, SKU, Category, Brand, Seller, Median price, Sales, Revenue, Lost profit, Days with sales, First Date, Median price")
     st.write("Без них скрипт работать не будет")
     
